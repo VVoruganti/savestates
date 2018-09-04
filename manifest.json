@@ -1,0 +1,8 @@
+{
+	  "manifest_version":1,
+	  "name:": "Save States",
+	  "version": "1.0",
+
+	  "description": "Allows users to set browsing profiles that they can use to instantly load browsing sessions"
+	 
+}

@@ -1,12 +1,15 @@
 {
-    "manifest_version":1,
-    "name:": "Save States",
+    "name": "Save States",
     "version": "1.0",
 
     "description": "Allows users to set browsing profiles that they can use to instantly load browsing sessions",
-
+    "permissions": ["storage"],
+    "background" : {
+        "scripts": ["popup/savestates.js"],
+        "persistent": true
+    },
     "browser_action": {
-        "default_popup": "popup\popup.html"
-    }
-	 
+        "default_popup": "popup/popup.html"
+    },
+	"manifest_version":2 
 }

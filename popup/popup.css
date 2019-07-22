@@ -1,4 +1,30 @@
 body {
     width:150px;
-    height:500px;
+    height:300px;
+    margin:0px;
+    border:0px;
+    padding:0px;
+}
+
+.stateButton {
+    width:100%;
+    height:30px;
+    text-align:center;
+}
+
+
+.stateButton:nth-child(n+2) {
+    border-top:1px black solid;
+}
+
+.stateButton p {
+    line-height:30px;
+    width:100%;
+    margin:auto;
+}
+
+.stateButton:hover {
+    transition:0.1s;
+    transform:scale(1.1);
+    cursor: pointer;
 }

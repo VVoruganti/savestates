@@ -67,3 +67,10 @@ document.querySelector("#add-state").addEventListener("click", (event) => {
     document.querySelector("#states").append(container);
 
 });
+
+
+document.querySelector("#delete-state-toggle").addEventListener("click", (event) => {
+    for(let i = 1; i < stateTracker + 1; i++ ) {
+        let state = document.querySelector(`#state-${i}`);
+    }
+});

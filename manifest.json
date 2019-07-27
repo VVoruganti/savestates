@@ -8,6 +8,7 @@
         "scripts": ["src/savestates.js"],
         "persistent": true
     },
+    "options_page": "options.html",
     "browser_action": {
         "default_popup": "src/popup.html"
     },

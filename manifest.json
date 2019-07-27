@@ -3,12 +3,7 @@
     "version": "1.0",
 
     "description": "Allows users to set browsing profiles that they can use to instantly load browsing sessions",
-    "permissions": ["storage"],
-    "background" : {
-        "scripts": ["src/savestates.js"],
-        "persistent": true
-    },
-    "options_page": "options.html",
+    "permissions": ["storage","tabs"],
     "browser_action": {
         "default_popup": "src/popup.html"
     },

@@ -1,7 +1,23 @@
 document.querySelector("#add-state").addEventListener("click", (event) => {
-    addState(stateTracker);
+    let name = prompt("Name your new state");
+    if( name != null) {
+        chrome.storage.local.set({[name]:["http://www.google.com"]});
+        addState(name);
+    }
 });
 
+document.querySelector("#delete-state-toggle").addEventListener("click", (event) => {
+    const stateButtons = document.querySelectorAll(".stateButton");
+    for(let i = 0; i < stateButtons.length; i++) {
+        const deleteButton = document.createElement("div");
+        const p = document.createElement("p");
+        p.innerHTML = "x"
+        deleteButton.className = "deleteButton";
+        deleteButton.append(p);
+        stateButtons[i].children[0].className = "delete-title";
+        stateButtons[i].append(deleteButton);
+    }
+})
 
 // document.querySelector("#delete-state-toggle").addEventListener("click", (event) => {
 //     for(let i = 1; i < stateTracker + 1; i++ ) {
@@ -9,9 +25,11 @@ document.querySelector("#add-state").addEventListener("click", (event) => {
 //     }
 // });
 
+let stateTracker;
 let states;
 chrome.storage.local.get(null, result => {
     states = Object.keys(result);
+    stateTracker = states.length ;
     for(let i = 0; i < states.length; i++) {
         addState(states[i]);
     }
@@ -47,8 +65,8 @@ function addState(stateName) {
     container.addEventListener("click", (event) => {
         chrome.storage.local.get(stateName, (result) => {
             console.log(result[stateName]);
-            for(let i =0; i < result[stateName].length; i++) {
-                chrome.tabs.create({"url":result[stateName][i]});
+            for(let i = 0; i < result[stateName].length; i++) {
+                chrome.tabs.create({"url":result[stateName][i], "active":false});
             }
         });
     });

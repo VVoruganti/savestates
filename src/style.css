@@ -24,6 +24,12 @@ body {
     border-right:1px solid black;
 }
 
+.delete-title {
+    width:55%;
+    height:100%;
+    border-right:1px solid black;
+}
+
 .edit-state {
     width:30%;
     height:100%;
@@ -37,6 +43,13 @@ p {
     line-height:30px;
     width:100%;
     margin:auto;
+}
+
+.deleteButton {
+    width:15%;
+    line-height: 30px;;
+    height:100%;
+    background-color:red;
 }
 
 /* .stateButton:hover {
@@ -67,7 +80,7 @@ p {
     text-align:center;
 }
 
-.title:hover, .edit-state:hover, #add-state:hover, #delete-state-toggle:hover {
+.title:hover, .edit-state:hover, #add-state:hover, #delete-state-toggle:hover, .deleteButton:hover, .delete-title:hover {
     transition:0.1s;
     transform:scale(1.1);
     cursor:pointer;

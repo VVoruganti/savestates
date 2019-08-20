@@ -10,16 +10,7 @@ document.querySelector("#add-state").addEventListener("click", (event) => {
 // Event listener for the delete button
 // TO DO change it to toggle instead of simply adding the delete state
 document.querySelector("#delete-state-toggle").addEventListener("click", (event) => {
-    const stateButtons = document.querySelectorAll(".stateButton");
-    for(let i = 0; i < stateButtons.length; i++) {
-        const deleteButton = document.createElement("div");
-        const p = document.createElement("p");
-        p.innerHTML = "x"
-        deleteButton.className = "deleteButton";
-        deleteButton.append(p);
-        stateButtons[i].children[0].className = "delete-title";
-        stateButtons[i].append(deleteButton);
-    }
+    toggleDeleteState();
 })
 
 
@@ -71,12 +62,44 @@ function addState(stateName) {
     document.querySelector("#states").append(container);
 
     // Adds an event listener to the state button to trigger the state functionality when clicked
-    container.addEventListener("click", (event) => {
+    title.addEventListener("click", (event) => {
         chrome.storage.local.get(stateName, (result) => {
-            console.log(result[stateName]);
+            // console.log(result[stateName]);
             for(let i = 0; i < result[stateName].length; i++) {  // for loop to iteratively create new tabs depending on the state definition
                 chrome.tabs.create({"url":result[stateName][i], "active":false});
             }
         });
     });
+}
+
+
+function deleteState(state) {
+    console.log(state);
+    let stateName = state.firstChild.firstChild.innerHTML;
+    chrome.storage.local.remove(stateName);
+    state.remove();
+}
+
+function toggleDeleteState() {
+    const stateButtons = document.querySelectorAll(".stateButton");
+    if (stateButtons[0].children[0].className == "delete-title") {
+        for( let i = 0; i < stateButtons.length; i++) {
+            stateButtons[i].children[0].className = "title";
+            stateButtons[i].children[2].remove();
+        }
+    } else {
+        for(let i = 0; i < stateButtons.length; i++) {
+            const deleteButton = document.createElement("div");
+            const p = document.createElement("p");
+            p.innerHTML = "x";
+            deleteButton.className = "deleteButton";
+            deleteButton.append(p);
+            stateButtons[i].children[0].className = "delete-title";
+            stateButtons[i].append(deleteButton);
+            deleteButton.addEventListener("click", (event) => {
+                let state = event.target.parentNode.parentNode;
+                deleteState(state);
+            })
+        }
+    }
 }

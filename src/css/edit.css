@@ -1,0 +1,24 @@
+body {
+    margin: 0px;
+    padding: 0px;
+    width:100%;
+    height: 100%;
+}
+
+#main {
+    width: 50%;
+    height: 200px;
+    margin:auto;
+    border:1px solid black;
+}
+
+#form-field {
+    display:flex;
+    flex-direction:row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+#form-field > label {
+    height:100%;
+}

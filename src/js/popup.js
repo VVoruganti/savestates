@@ -1,9 +1,10 @@
 // event listener that adds new state to UI. defaults to just having google in the state
 document.querySelector("#add-state").addEventListener("click", (event) => {
-    let name = prompt("Name your new state");
+    let name = window.prompt("Name your new state");
     if( name != null) {
         chrome.storage.local.set({[name]:["http://www.google.com"]});
-        addState(name);
+        addStateToUI(name);
+        location.reload();
     }
 });
 
@@ -21,7 +22,7 @@ chrome.storage.local.get(null, result => {
     states = Object.keys(result);
     stateTracker = states.length ;
     for(let i = 0; i < states.length; i++) {
-        addState(states[i]);
+        addStateToUI(states[i]);
     }
 })
 
@@ -30,8 +31,8 @@ chrome.storage.local.get(null, result => {
  * Used to add state buttons to the UI
  * builds the DOM element from scratch
  */
-function addState(stateName) {
-    
+function addStateToUI(stateName) {
+
     // Makes the DOM elements for the state
     let container = document.createElement("div");
     let title = document.createElement("div");
@@ -64,7 +65,6 @@ function addState(stateName) {
     // Adds an event listener to the state button to trigger the state functionality when clicked
     title.addEventListener("click", (event) => {
         chrome.storage.local.get(stateName, (result) => {
-            // console.log(result[stateName]);
             for(let i = 0; i < result[stateName].length; i++) {  // for loop to iteratively create new tabs depending on the state definition
                 chrome.tabs.create({"url":result[stateName][i], "active":false});
             }
@@ -73,33 +73,57 @@ function addState(stateName) {
 }
 
 
+function statePrompt() {
+    chrome.tabs.create({
+        url: chrome.extension.getURL('/src/views/dialog.html'),
+        active: false
+    }, function(tab) {
+        // After the tab has been created, open a window to inject the tab
+        chrome.windows.create({
+            tabId: tab.id,
+            type: 'popup',
+            focused: true
+            // incognito, top, left, ...
+        });
+    });
+}
+
 function deleteState(state) {
     console.log(state);
     let stateName = state.firstChild.firstChild.innerHTML;
     chrome.storage.local.remove(stateName);
     state.remove();
+    location.reload();
+}
+
+function addDeleteClass(stateButtons) {
+    for(let i = 0; i < stateButtons.length; i++) {
+        const deleteButton = document.createElement("div");
+        const p = document.createElement("p");
+        p.innerHTML = "x";
+        deleteButton.className = "deleteButton";
+        deleteButton.append(p);
+        stateButtons[i].children[0].className = "delete-title";
+        stateButtons[i].append(deleteButton);
+        deleteButton.addEventListener("click", (event) => {
+            let state = event.target.parentNode.parentNode;
+            deleteState(state);
+        })
+    }
+}
+
+function removeDeleteClass(stateButtons) {
+    for( let i = 0; i < stateButtons.length; i++) {
+        stateButtons[i].children[0].className = "title";
+        stateButtons[i].children[2].remove();
+    }
 }
 
 function toggleDeleteState() {
     const stateButtons = document.querySelectorAll(".stateButton");
     if (stateButtons[0].children[0].className == "delete-title") {
-        for( let i = 0; i < stateButtons.length; i++) {
-            stateButtons[i].children[0].className = "title";
-            stateButtons[i].children[2].remove();
-        }
+        removeDeleteClass(stateButtons);
     } else {
-        for(let i = 0; i < stateButtons.length; i++) {
-            const deleteButton = document.createElement("div");
-            const p = document.createElement("p");
-            p.innerHTML = "x";
-            deleteButton.className = "deleteButton";
-            deleteButton.append(p);
-            stateButtons[i].children[0].className = "delete-title";
-            stateButtons[i].append(deleteButton);
-            deleteButton.addEventListener("click", (event) => {
-                let state = event.target.parentNode.parentNode;
-                deleteState(state);
-            })
-        }
+        addDeleteClass(stateButtons);   
     }
 }

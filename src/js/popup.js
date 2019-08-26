@@ -67,50 +67,46 @@ function addStateToUI(stateName) {
     });
 }
 
+// Event listeners that opens edit page when the edit button is clicked
 document.querySelector("#edit").addEventListener("click", (event) => {
     chrome.tabs.create({"url":"/src/views/edit.html", "active":true});
 })
 
+// Event listeners that adds a state with the tabs in the current window. 
 document.querySelector("#save").addEventListener("click", (event) => {
     chrome.tabs.query({currentWindow:true}, (result) => {
-        let name = prompt("Name for new State");
+        let name = window.prompt("Name for new State"); // Gets the name for the state
         if(name != null) {
-            let links = []
+            let links = []; // array to store the tabs. 
             for(let i =0; i < result.length; i++) {
                 links.push(result[i].url);
             }
-            chrome.storage.local.set({[name]:links});
-            addStateToUI(name);
-            location.reload();
+            chrome.storage.local.set({[name]:links}); // stores the state in chrome storage
+            addStateToUI(name); // adds the state tot he UI
+            location.reload(); // Reloads the extension
         }
     })
 })
 
-// function statePrompt() {
-//     chrome.tabs.create({
-//         url: chrome.extension.getURL('/src/views/dialog.html'),
-//         active: false
-//     }, function(tab) {
-//         // After the tab has been created, open a window to inject the tab
-//         chrome.windows.create({
-//             tabId: tab.id,
-//             type: 'popup',
-//             focused: true
-//             // incognito, top, left, ...
-//         });
-//     });
-// }
-
+/**
+ * Function used to delete a state
+ * Deletes the state from DOM and chrome storage
+ * @param {Node} state DOM Node that contains the state button
+ */
 function deleteState(state) {
-    console.log(state);
-    let stateName = state.firstChild.firstChild.innerHTML;
-    chrome.storage.local.remove(stateName);
-    state.remove();
-    location.reload();
+    let stateName = state.firstChild.firstChild.innerHTML; // Gets the name state
+    chrome.storage.local.remove(stateName); // Removes the state from the chrome storage
+    state.remove(); // Removes the state Node from the DOM
+    location.reload(); // Refresh the extension
 }
 
+/**
+ * Adds the delete buttons to each state Node
+ * @param {Array of Node Objects} stateButtons 
+ */
 function addDeleteClass(stateButtons) {
     for(let i = 0; i < stateButtons.length; i++) {
+        // constructs the DOM object for the delete button. 
         const deleteButton = document.createElement("div");
         const p = document.createElement("p");
         p.innerHTML = "x";
@@ -118,6 +114,7 @@ function addDeleteClass(stateButtons) {
         deleteButton.append(p);
         stateButtons[i].children[0].className = "delete-title";
         stateButtons[i].append(deleteButton);
+        // Adds an event listener that delete the state when clicked
         deleteButton.addEventListener("click", (event) => {
             let state = event.target.parentNode.parentNode;
             deleteState(state);
@@ -125,13 +122,22 @@ function addDeleteClass(stateButtons) {
     }
 }
 
+/**
+ * A function used to switch the statebuttons back to regular mode. 
+ * @param {Array} stateButtons - Array of states from DOM. 
+ */
 function removeDeleteClass(stateButtons) {
+    // Loops through the state buttons and switches the titles back to normal titles
+    // and removes the delete button from each state button. 
     for( let i = 0; i < stateButtons.length; i++) {
         stateButtons[i].children[0].className = "title";
         stateButtons[i].children[1].remove();
     }
 }
 
+/**
+ * Removes the delete class if already there or adds it if not
+ */
 function toggleDeleteState() {
     const stateButtons = document.querySelectorAll(".stateButton");
     if (stateButtons[0].children[0].className == "delete-title") {

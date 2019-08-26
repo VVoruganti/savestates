@@ -71,6 +71,20 @@ document.querySelector("#edit").addEventListener("click", (event) => {
     chrome.tabs.create({"url":"/src/views/edit.html", "active":true});
 })
 
+document.querySelector("#save").addEventListener("click", (event) => {
+    chrome.tabs.query({currentWindow:true}, (result) => {
+        let name = prompt("Name for new State");
+        if(name != null) {
+            let links = []
+            for(let i =0; i < result.length; i++) {
+                links.push(result[i].url);
+            }
+            chrome.storage.local.set({[name]:links});
+            addStateToUI(name);
+            location.reload();
+        }
+    })
+})
 
 // function statePrompt() {
 //     chrome.tabs.create({

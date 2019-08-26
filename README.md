@@ -24,3 +24,6 @@ For example, if you always have the same 3 websites or bookmarks open when worki
 - [ ] Make a icon to represent the application
 - [ ] Support for french
 - [ ] Use real icons instead of regulat UTF-8 characters 
+- [x] Make it so you can save current browsing session
+- [ ] Make it so you can't repeat names for states
+

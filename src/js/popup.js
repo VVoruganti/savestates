@@ -36,35 +36,26 @@ function addStateToUI(stateName) {
     // Makes the DOM elements for the state
     let container = document.createElement("div");
     let title = document.createElement("div");
-    // let edit = document.createElement("div");
 
     // Makes DOM elements for the text on the state
     let titleText = document.createElement("p");
-    // let editText = document.createElement("p");
 
     // Adds the classes in order to add styling
     container.className = "stateButton";
     title.className = "title";
-    // edit.className = "edit-state";
 
     // Fills the innerHTMl with the appropriate text
     titleText.innerHTML = stateName; // state has the text corresponding to name
-    // editText.innerHTML = "edit"; // just says edit on the edit section 
     // TO DO make the edit a fa icon
 
     // Adds the textual DOM elements to their appropriate containers
     title.append(titleText);
-    // edit.append(editText);
 
     // Adds the individual sections to the overall state
     container.append(title);
 
     // Adds the button the UI
     document.querySelector("#states").append(container);
-
-    // edit.addEventListener("click", (event) => {
-    //     chrome.tabs.create({"url":"/src/views/edit.html", "active":true});
-    // })
 
     // Adds an event listener to the state button to trigger the state functionality when clicked
     title.addEventListener("click", (event) => {
@@ -75,6 +66,10 @@ function addStateToUI(stateName) {
         });
     });
 }
+
+document.querySelector("#edit").addEventListener("click", (event) => {
+    chrome.tabs.create({"url":"/src/views/edit.html", "active":true});
+})
 
 
 // function statePrompt() {

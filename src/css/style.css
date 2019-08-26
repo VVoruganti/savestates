@@ -97,13 +97,24 @@ p {
     text-align:center;
 }
 
-#edit > h3 {
+#edit > h3, #save > h3 {
     line-height:30px;
     margin:0px;
     font-weight:200;
 }
 
-.title:hover, .edit-state:hover, #add-state:hover, #delete-state-toggle:hover, .deleteButton:hover, .delete-title:hover, #edit:hover {
+#save {
+    width:100%;
+    height:30px;
+    display:flex;
+    flex-direction:row;
+    justify-content: center;
+    align-items:center;
+    background-color: purple;
+    text-align:center;
+}
+
+.title:hover, .edit-state:hover, #add-state:hover, #delete-state-toggle:hover, .deleteButton:hover, .delete-title:hover, #edit:hover, #save:hover {
     transition:0.1s;
     transform:scale(1.1);
     cursor:pointer;

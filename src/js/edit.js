@@ -10,7 +10,7 @@ chrome.storage.local.get(null, (result) => {
 })
 
 document.querySelector("input[type=submit]").addEventListener("click", (event) => {
-    updateEditField(currentNameField.value);
+    updateEditField(currentNameField.innerHTML);
 })
 
 function addStatesToUI(states) {
@@ -25,7 +25,7 @@ function addStatesToUI(states) {
         nav.appendChild(container);
         container.addEventListener("click", (event) => {
             console.log(stateNames[i]);
-            currentNameField.value = stateNames[i];
+            currentNameField.innerHTML = stateNames[i];
             newNameField.value = stateNames[i];
             linksField.value = states[stateNames[i]];
         });
@@ -34,10 +34,12 @@ function addStatesToUI(states) {
 
 function updateEditField(stateName) {
     console.log(linksField.value);
+    let newState = newNameField.value;
     let arr = linksField.value.split(", ");
     console.log(arr);
-    chrome.storage.local.set({[stateName]:arr}, () => {
-
+    chrome.storage.local.remove(stateName);
+    chrome.storage.local.set({[newState]:arr}, () => {
+        location.reload();
     });
 }
 

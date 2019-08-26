@@ -10,23 +10,20 @@
                 <h1>States</h1>
             </div>
         </div>
-            <h2>Edit states here</h2>
-            <div id="form">
-                <div class="form-field">
-                    <label for="currentStateName">Current Name: </label>
-                    <input id="currentStateName" type="text"> 
+        <div id="main">
+                <h2>Edit states here</h2>
+                <div id="form">
+                    <p>Current Name: <span id="currentStateName"></span></p>
+                    <div class="form-field">
+                        <label for="newStateName">New Name: </label>
+                        <input id="newStateName" type="text"> 
+                    </div>
+                    <div class="form-field">
+                        <label for="stateLinks">Links:</label>
+                        <textarea id="stateLinks" ></textarea>    
+                    </div>
+                    <input type="submit" value="update">
                 </div>
-                <div class="form-field">
-                    <label for="newStateName">New Name: </label>
-                    <input id="newStateName" type="text"> 
-                </div>
-                <div class="form-field">
-                    <label for="stateLinks">Links:</label>
-                    <textarea id="stateLinks" ></textarea>    
-                </div>
-                <input type="submit" value="update">
-            </div>
-            
         </div>
     </body>
     <script src="../js/edit.js" type="text/javascript"></script>

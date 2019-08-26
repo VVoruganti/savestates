@@ -12,14 +12,15 @@ For example, if you always have the same 3 websites or bookmarks open when worki
 - [x] Savestates persist over browsing sessions (until deleted history and such)
 - [x] Delete Savestates
 - [x] Dynamically build UI based on local storage values
+- [x] Have a view for editing the states which will update a state
+- [x] View savestate definition
+- [x] Options Page
+- [x] Manually Edit Savestates in options page
+    - [x] Name
+    - [x] Websites
+- [x] Can Rename States
 
-- [ ] Can Rename States
+
 - [ ] Make a icon to represent the application
 - [ ] Support for french
 - [ ] Use real icons instead of regulat UTF-8 characters 
-- [ ] Have a view for editing the states which will update a state
-- [ ] View savestate definition
-- [ ] Options Page
-- [ ] Manually Edit Savestates in options page
-    - [ ] Name
-    - [ ] Websites

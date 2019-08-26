@@ -26,6 +26,13 @@ body {
     text-align:center
 }
 
+#main { 
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-left:40px;
+}
+
 #form-field {
     display:flex;
     flex-direction:row;
@@ -35,6 +42,7 @@ body {
 
 #form-field > label {
     height:100%;
+    width: 100px;
 }
 
 .state {

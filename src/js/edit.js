@@ -36,8 +36,13 @@ function updateEditField(stateName) {
     console.log(linksField.value);
     let arr = linksField.value.split(", ");
     console.log(arr);
-    chrome.storage.local.set({[stateName]:arr}, (result) => {
-        console.log(result);
-    });
+    chrome.storage.local.set({[stateName]:arr}, () => {
 
+    });
+}
+
+function reupdateStatesVar() {
+    chrome.storage.local.get(null, (result) => {
+        states = result;
+    })
 }

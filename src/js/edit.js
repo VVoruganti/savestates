@@ -1,18 +1,26 @@
-let states; 
+let states; // global variable used to store the state of chrome storage
 
-const currentNameField = document.querySelector("#currentStateName");
-const newNameField = document.querySelector("#newStateName");
-const linksField = document.querySelector("#stateLinks");
+const currentNameField = document.querySelector("#currentStateName"); // gets the DOM Node for the current name
+const newNameField = document.querySelector("#newStateName"); // Gets the DOM Node for the new name input field
+const linksField = document.querySelector("#stateLinks"); // gets the DOM Node for the links textarea
 
+
+// Populates the states variable and the states in the navbar
 chrome.storage.local.get(null, (result) => {
     states = result;
     addStatesToUI(result);
 })
 
+// Adds event listener to the submit button to update the states when clicked
 document.querySelector("input[type=submit]").addEventListener("click", (event) => {
-    updateEditField(currentNameField.innerHTML);
+    updateState(currentNameField.innerHTML);
 })
 
+/**
+ * This is a method that will populate the navbar with the states and add event listeners
+ * that allow the states to be edited. 
+ * @param {Object} states holds the states from chrome storage
+ */
 function addStatesToUI(states) {
     let stateNames = Object.keys(states);
     const nav = document.querySelector("#navbar");
@@ -23,8 +31,8 @@ function addStatesToUI(states) {
         container.className = "state";
         container.append(p);
         nav.appendChild(container);
+        // Adds event listener that updates edit fields to match a particular state
         container.addEventListener("click", (event) => {
-            console.log(stateNames[i]);
             currentNameField.innerHTML = stateNames[i];
             newNameField.value = stateNames[i];
             linksField.value = states[stateNames[i]];
@@ -32,19 +40,16 @@ function addStatesToUI(states) {
     }
 }
 
-function updateEditField(stateName) {
-    console.log(linksField.value);
+/**
+ * A method used to update a state in chrome storage based
+ * on the edit fields
+ * @param {String} stateName 
+ */
+function updateState(stateName) {
     let newState = newNameField.value;
     let arr = linksField.value.split(", ");
-    console.log(arr);
     chrome.storage.local.remove(stateName);
     chrome.storage.local.set({[newState]:arr}, () => {
         location.reload();
     });
-}
-
-function reupdateStatesVar() {
-    chrome.storage.local.get(null, (result) => {
-        states = result;
-    })
 }

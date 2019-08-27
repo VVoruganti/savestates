@@ -12,6 +12,14 @@ body {
     width: 85%;
     height: 100%;
     margin:auto;
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;;
+}
+
+#main p, #main label {
+    font-size:2em;
 }
 
 #navbar { 
@@ -26,23 +34,17 @@ body {
     text-align:center
 }
 
-#main { 
-    display:flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    padding-left:40px;
-}
-
-#form-field {
+.form-field {
     display:flex;
     flex-direction:row;
     justify-content: flex-start;
     align-items: center;
+    padding-bottom: 20px;
 }
 
-#form-field > label {
+.form-field > label {
     height:100%;
-    width: 100px;
+    width: 200px;
 }
 
 .state {

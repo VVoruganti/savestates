@@ -47,7 +47,7 @@ function addStatesToUI(states) {
  */
 function updateState(stateName) {
     let newState = newNameField.value;
-    let arr = linksField.value.split(", ");
+    let arr = linksField.value.split(",");
     chrome.storage.local.remove(stateName);
     chrome.storage.local.set({[newState]:arr}, () => {
         location.reload();

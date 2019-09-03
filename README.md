@@ -26,3 +26,5 @@ For example, if you always have the same 3 websites or bookmarks open when worki
 - [ ] Use real icons instead of regulat UTF-8 characters 
 - [ ] Make it so you can't repeat names for states
 
+Test of git for me
+

@@ -25,6 +25,5 @@ For example, if you always have the same 3 websites or bookmarks open when worki
 - [ ] Support for french
 - [ ] Use real icons instead of regulat UTF-8 characters 
 - [ ] Make it so you can't repeat names for states
-
-Test of git for me
+- [ ] Give it support for firefox (Should probably do in a different branch)
 

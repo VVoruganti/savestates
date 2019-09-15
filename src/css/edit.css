@@ -12,11 +12,12 @@ body {
     width: 85%;
     height: 100%;
     margin:auto;
+    background-color:#e3f2fd;
 }
 
 #navbar { 
     width:15%;
-    background-color:lightgreen;
+    background-color:lightblue;
     display:flex;
     flex-direction:column;
     justify-content: flex-start;
@@ -49,8 +50,7 @@ body {
 .state {
     height: 30px;
     width:100%;
-    background-color:lightsalmon;
-    border-bottom: 1px dashed black;
+    background-color:lightsteelblue;
     text-align:center;
     display:flex;
     flex-direction: row;

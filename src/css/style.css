@@ -1,6 +1,11 @@
+html {
+    width: 200px;
+
+}
+
 body {
     width:200px;
-    /* min-height:30px; */
+    max-height:300px;
     margin:0px;
     border:0px;
     padding:0px;
@@ -8,7 +13,7 @@ body {
     flex-direction:column;
     flex-shrink: 1;
     min-height:0px;
-    
+    overflow-x: hidden;
 }
 
 #states {
@@ -110,7 +115,7 @@ p {
     flex-direction:row;
     justify-content: center;
     align-items:center;
-    background-color: purple;
+    background-color: #BB86FC;
     text-align:center;
 }
 

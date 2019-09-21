@@ -32,39 +32,26 @@ chrome.storage.local.get(null, result => {
  * builds the DOM element from scratch
  */
 function addStateToUI(stateName) {
-
-    // Makes the DOM elements for the state
+    
     let container = document.createElement("div");
-    let title = document.createElement("div");
+    container.className = "container level is-mobile";
 
-    // Makes DOM elements for the text on the state
-    let titleText = document.createElement("p");
+    let button = document.createElement("button");
+    button.className = "button level-item is-primary";
+    button.innerHTML = stateName;
 
-    // Adds the classes in order to add styling
-    container.className = "stateButton";
-    title.className = "title";
-
-    // Fills the innerHTMl with the appropriate text
-    titleText.innerHTML = stateName; // state has the text corresponding to name
-    // TO DO make the edit a fa icon
-
-    // Adds the textual DOM elements to their appropriate containers
-    title.append(titleText);
-
-    // Adds the individual sections to the overall state
-    container.append(title);
-
-    // Adds the button the UI
+    container.append(button);
+    
     document.querySelector("#states").append(container);
 
-    // Adds an event listener to the state button to trigger the state functionality when clicked
-    title.addEventListener("click", (event) => {
+    button.addEventListener("click", (event) => {
         chrome.storage.local.get(stateName, (result) => {
             for(let i = 0; i < result[stateName].length; i++) {  // for loop to iteratively create new tabs depending on the state definition
                 chrome.tabs.create({"url":result[stateName][i], "active":false});
             }
         });
-    });
+    }); 
+
 }
 
 // Event listeners that opens edit page when the edit button is clicked
@@ -94,7 +81,7 @@ document.querySelector("#save").addEventListener("click", (event) => {
  * @param {Node} state DOM Node that contains the state button
  */
 function deleteState(state) {
-    let stateName = state.firstChild.firstChild.innerHTML; // Gets the name state
+    let stateName = state.innerHTML; // Gets the name state
     chrome.storage.local.remove(stateName); // Removes the state from the chrome storage
     state.remove(); // Removes the state Node from the DOM
     location.reload(); // Refresh the extension
@@ -106,17 +93,11 @@ function deleteState(state) {
  */
 function addDeleteClass(stateButtons) {
     for(let i = 0; i < stateButtons.length; i++) {
-        // constructs the DOM object for the delete button. 
-        const deleteButton = document.createElement("div");
-        const p = document.createElement("p");
-        p.innerHTML = "x";
-        deleteButton.className = "deleteButton";
-        deleteButton.append(p);
-        stateButtons[i].children[0].className = "delete-title";
+        const deleteButton = document.createElement("button");
+        deleteButton.className = "delete level-item has-background-danger is-large";
         stateButtons[i].append(deleteButton);
-        // Adds an event listener that delete the state when clicked
         deleteButton.addEventListener("click", (event) => {
-            let state = event.target.parentNode.parentNode;
+            let state = event.target.parentNode.children[0];
             deleteState(state);
         })
     }
@@ -130,7 +111,6 @@ function removeDeleteClass(stateButtons) {
     // Loops through the state buttons and switches the titles back to normal titles
     // and removes the delete button from each state button. 
     for( let i = 0; i < stateButtons.length; i++) {
-        stateButtons[i].children[0].className = "title";
         stateButtons[i].children[1].remove();
     }
 }
@@ -139,8 +119,8 @@ function removeDeleteClass(stateButtons) {
  * Removes the delete class if already there or adds it if not
  */
 function toggleDeleteState() {
-    const stateButtons = document.querySelectorAll(".stateButton");
-    if (stateButtons[0].children[0].className == "delete-title") {
+    const stateButtons = document.querySelectorAll("#states > .container");
+    if (stateButtons[0].children.length === 2) {
         removeDeleteClass(stateButtons);
     } else {
         addDeleteClass(stateButtons);   

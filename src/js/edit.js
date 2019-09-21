@@ -1,8 +1,8 @@
 let states; // global variable used to store the state of chrome storage
 
-const currentNameField = document.querySelector("#currentStateName"); // gets the DOM Node for the current name
-const newNameField = document.querySelector("#newStateName"); // Gets the DOM Node for the new name input field
-const linksField = document.querySelector("#stateLinks"); // gets the DOM Node for the links textarea
+const currentNameField = document.querySelector("#current-name"); // gets the DOM Node for the current name
+const newNameField = document.querySelector("#new-name"); // Gets the DOM Node for the new name input field
+const linksField = document.querySelector("#links"); // gets the DOM Node for the links textarea
 
 
 // Populates the states variable and the states in the navbar
@@ -12,7 +12,7 @@ chrome.storage.local.get(null, (result) => {
 })
 
 // Adds event listener to the submit button to update the states when clicked
-document.querySelector("input[type=submit]").addEventListener("click", (event) => {
+document.querySelector("button").addEventListener("click", (event) => {
     updateState(currentNameField.innerHTML);
 })
 
@@ -23,16 +23,19 @@ document.querySelector("input[type=submit]").addEventListener("click", (event) =
  */
 function addStatesToUI(states) {
     let stateNames = Object.keys(states);
-    const nav = document.querySelector("#navbar");
     for(let i = 0; i < stateNames.length; i++) {
-        const container = document.createElement("div");
-        const p = document.createElement("p");
-        p.innerHTML = stateNames[i];
-        container.className = "state";
-        container.append(p);
-        nav.appendChild(container);
+        const li = document.createElement("li");
+        const a = document.createElement("a");
+        a.innerHTML = stateNames[i];
+        li.append(a);
+
+        document.querySelector(".menu-list").append(li);
         // Adds event listener that updates edit fields to match a particular state
-        container.addEventListener("click", (event) => {
+        li.addEventListener("click", (event) => {
+            if (document.querySelector(".is-active") != null) {
+                document.querySelector(".is-active").classList.remove("is-active");
+            }
+            event.target.classList.add("is-active");
             currentNameField.innerHTML = stateNames[i];
             newNameField.value = stateNames[i];
             linksField.value = states[stateNames[i]];
